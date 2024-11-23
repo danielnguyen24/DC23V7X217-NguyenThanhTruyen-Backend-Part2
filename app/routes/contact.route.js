@@ -3,27 +3,18 @@ const contacts = require("../controllers/contact.controller");
 
 const router = express.Router();
 
-// Các route khác của contact
-router.route("/")
-  .get(contacts.findALL)
+router
+  .route("/")
+  .get(contacts.findAll)
   .post(contacts.create)
-  .delete(contacts.deleteALL);
+  .delete(contacts.deleteAll);
 
-// Route cho yêu cầu yêu thích
+
 router.route("/favorite")
-  .get(contacts.findALLFavorite);
-
-// Route cho một contact cụ thể theo ID
+   .get(contacts.findAllFavorite);
 router.route("/:id")
-  .get((req, res) => {
-    const contactId = req.params.id;
-    if (contactId === "999") {
-      // Giả sử ID không hợp lệ thì sẽ trả về lỗi 404
-      return res.status(404).json({ message: "Contact not found" });
-    }
-    contacts.findOne(req, res);
-  })
+  .get(contacts.findOne)
   .put(contacts.update)
   .delete(contacts.delete);
-
+  
 module.exports = router;
